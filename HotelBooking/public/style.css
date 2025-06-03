@@ -1,0 +1,305 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --Dominant-hue: #000000;
+  --Secondary-hue: #c0c0c0;
+  --Accent-hue: #3c5f95;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 20vh;
+  padding: 0 5rem;
+  border-bottom: 0.125rem solid #e9e7e7;
+}
+
+nav img {
+  width: auto;
+  height: 100%;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 3.125rem;
+}
+
+.navLinks .links {
+  display: flex;
+  list-style: none;
+  gap: 3.125rem;
+}
+
+.links li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li .line {
+  width: 0;
+  height: 2px;
+  border-radius: 8px;
+  background-color: #000;
+  transition: width 0.5s ease;
+}
+
+.links li:hover .line {
+  width: 60%;
+}
+
+.links li a {
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--Secondary-hue);
+  transition: all 0.5s ease;
+}
+
+.links li a:hover {
+  color: var(--Dominant-hue);
+}
+
+.loginBtn {
+  display: flex;
+  gap: 10px;
+}
+
+.loginBtn button {
+  font-size: 1.25rem;
+  width: 150px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.loginBtn .SignIn {
+  background-color: #ffffff;
+  border: 2px solid #e9e7e7;
+}
+
+.loginBtn .Register {
+  border: none;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.hotel-filters-section {
+  display: flex;
+  justify-content: space-between;
+  height: 20vh;
+  width: 100%;
+  padding: 10px 50px;
+  border-bottom: 2px solid #e9e7e7;
+}
+
+.hotel-filters-section p {
+  font-size: 1.25rem;
+}
+
+.hotelFilters {
+  display: flex;
+  gap: 30px;
+  width: 60%;
+  height: 100%;
+  /* border: 1px solid #000; */
+}
+
+.locationFilter,
+.guestFilter,
+.checkIn,
+.checkOut {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dropdownContainer,
+.guestDropdownContainer {
+  position: absolute;
+  top: 7rem;
+  width: 100%;
+  height: fit-content;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.dropdownContainer .placesHeader {
+  padding: 10px 10px 5px 10px;
+  font-weight: 500;
+}
+
+.dropdownContainer p {
+  font-size: 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--Secondary-hue);
+  transition: background-color 0.5s ease;
+}
+
+.item:hover {
+  background-color: #e3e3e3;
+}
+
+.dropdownContainer .item:last-child {
+  border-bottom: none;
+  border-radius: 0 0px 8px 8px;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.guestDropdownContainer {
+  width: 120%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.guestDropdownContainer p {
+  font-size: 1rem;
+}
+
+.addGuestContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  height: 100%;
+  border: 1px solid #000;
+  /* padding: 5px; */
+  /* border-radius: 16px; */
+}
+
+.decreaseBtn,
+.increaseBtn {
+  width: 25px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--Accent-hue);
+  transition: background-color 0.5s ease;
+}
+
+.decreaseBtn:hover,
+.increaseBtn:hover {
+  background-color: rgb(0, 123, 255, 0.1);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+  gap: 5px;
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+  border-radius: 16px;
+}
+
+.inputContainer i {
+  font-size: 1.25rem;
+}
+
+#locationInput,
+#guestInput {
+  height: 100%;
+  width: 100%;
+  font-size: 0.8rem;
+  border: none;
+  background-color: #f5f5f5;
+}
+
+#locationInput:focus,
+#guestInput:focus,
+#hotelInput:focus {
+  outline: none;
+}
+
+.checkinDate,
+.checkoutDate,
+.guest {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  padding: 5px 10px;
+  gap: 5px;
+  border-radius: 16px;
+  border: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.checkinDate i,
+.checkoutDate i,
+.guest i {
+  font-size: 1.25rem;
+}
+
+.hotelSearch {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  height: 100%;
+  gap: 10px;
+  /* border: 1px solid #000; */
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50%;
+  border-radius: 30px;
+  padding: 20px;
+  gap: 10px;
+  background-color: #f5f5f5;
+}
+
+#hotelInput {
+  height: 100%;
+  width: 100%;
+  font-size: 0.8rem;
+  border: none;
+  background-color: #f5f5f5;
+}
+
+.searchBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+}
+
+.searchBtn i {
+  font-size: 1.25rem;
+}
