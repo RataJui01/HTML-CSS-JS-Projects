@@ -137,6 +137,16 @@ li .line {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+#calendar {
+  position: absolute;
+  top: 7rem;
+}
+
+#checkoutCalendar {
+  position: absolute;
+  top: 7rem;
+}
+
 .dropdownContainer .placesHeader {
   padding: 10px 10px 5px 10px;
   font-weight: 500;

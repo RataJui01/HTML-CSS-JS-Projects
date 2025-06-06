@@ -8,6 +8,12 @@ const decreaseBtn = document.querySelector(".decreaseBtn");
 const increaseBtn = document.querySelector(".increaseBtn");
 const guestCounter = document.querySelector(".counter");
 const signInBtn = document.querySelector(".SignIn");
+const checkInDateBtn = document.querySelector(".checkinDate");
+const checkinDate = document.querySelector(".displayCheckinDate");
+const checkoutDateBtn = document.querySelector(".checkoutDate");
+const checkoutDate = document.querySelector(".displayCheckoutDate");
+let calendar;
+let calendar2;
 
 function handleLocationClick(element) {
   element.addEventListener("click", () => {
@@ -50,6 +56,73 @@ const handleGuestChange = function (e) {
   if (currentCount < 1) currentCount = 1;
   updateGuestCount(currentCount);
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const { Calendar } = window.VanillaCalendarPro;
+
+  calendar = new Calendar("#calendar", {
+    onClickDate(self, event) {
+      console.log(self);
+      checkinDate.textContent = self.context.selectedDates[0];
+    },
+    onInit(self) {
+      self.show();
+      self.hide();
+    },
+    enableDateToggle: false,
+    disableDatesPast: true,
+    dateMax: "2025-12-31",
+    dateMin: "2025-01-01",
+  });
+
+  calendar2 = new Calendar("#checkoutCalendar", {
+    onClickDate(self, event) {
+      console.log(self);
+      checkoutDate.textContent = self.context.selectedDates[0];
+    },
+    onInit(self) {
+      self.show();
+      self.hide();
+    },
+    enableDateToggle: false,
+    disableDatesPast: true,
+    dateMax: "2025-12-31",
+    dateMin: "2025-01-01",
+  });
+  calendar.init();
+  calendar2.init();
+});
+
+checkInDateBtn.addEventListener("click", (e) => {
+  dropdown.classList.add("hidden");
+  guestDropdown.classList.add("hidden");
+  e.stopPropagation();
+  calendar.show();
+
+  window.addEventListener("click", (e) => {
+    const calendarElement = document.querySelector("#calendar");
+    if (!calendarElement.contains(e.target) && e.target !== checkInDateBtn) {
+      calendar.hide();
+    }
+  });
+});
+
+checkoutDateBtn.addEventListener("click", (e) => {
+  dropdown.classList.add("hidden");
+  guestDropdown.classList.add("hidden");
+  e.stopPropagation();
+  calendar2.show();
+
+  window.addEventListener("click", (e) => {
+    const checkoutCalendarElement = document.querySelector("#checkoutCalendar");
+    if (
+      !checkoutCalendarElement.contains(e.target) &&
+      e.target !== checkoutDateBtn
+    ) {
+      calendar2.hide();
+    }
+  });
+});
 
 locationItemList.forEach(handleLocationClick);
 locationInput.addEventListener("focus", (e) => {

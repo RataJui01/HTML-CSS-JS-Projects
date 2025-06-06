@@ -9,110 +9,123 @@
       href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/styles/index.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/index.js"
+      defer
+    ></script>
   </head>
-  <nav>
-    <img src="../public/assets/HotelLogo.png" alt="Hotel logo" />
-    <div class="navLinks">
-      <ul class="links">
-        <li>
-          <a href="#">Home</a>
-          <div class="line"></div>
-        </li>
-        <li>
-          <a href="#">Search</a>
-          <div class="line"></div>
-        </li>
-        <li>
-          <a href="#">Blog</a>
-          <div class="line"></div>
-        </li>
-        <li>
-          <a href="#">About us</a>
-          <div class="line"></div>
-        </li>
-      </ul>
-      <div class="loginBtn">
-        <button class="SignIn">Sign in</button>
-        <button class="Register">Register</button>
+  <body>
+    <nav>
+      <img src="../public/assets/HotelLogo.png" alt="Hotel logo" />
+      <div class="navLinks">
+        <ul class="links">
+          <li>
+            <a href="#">Home</a>
+            <div class="line"></div>
+          </li>
+          <li>
+            <a href="#">Search</a>
+            <div class="line"></div>
+          </li>
+          <li>
+            <a href="#">Blog</a>
+            <div class="line"></div>
+          </li>
+          <li>
+            <a href="#">About us</a>
+            <div class="line"></div>
+          </li>
+        </ul>
+        <div class="loginBtn">
+          <button class="SignIn">Sign in</button>
+          <button class="Register">Register</button>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="hotel-filters-section">
-    <div class="hotelFilters">
-      <div class="locationFilter">
-        <p>Location</p>
-        <div class="inputContainer">
-          <i class="bx bx-location"></i>
+    <div class="hotel-filters-section">
+      <div class="hotelFilters">
+        <div class="locationFilter">
+          <p>Location</p>
+          <div class="inputContainer">
+            <i class="bx bx-location"></i>
+            <input
+              type="text"
+              name="locationInput"
+              id="locationInput"
+              placeholder="Ex. Bangkok, TH"
+            />
+          </div>
+          <div class="dropdownContainer hidden">
+            <p class="placesHeader">Popular places</p>
+            <div class="item">
+              <i class="bx bx-location"></i>
+              <p class="places">Pattaya, TH</p>
+            </div>
+            <div class="item">
+              <i class="bx bx-location"></i>
+              <p class="places">Bangkok, TH</p>
+            </div>
+            <div class="item">
+              <i class="bx bx-location"></i>
+              <p class="places">Huahin, TH</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guestFilter">
+          <p>Person</p>
+          <button class="guest">
+            <i class="bx bx-user"></i
+            ><span><span class="numOfGuest">1</span> Person</span>
+          </button>
+          <div class="guestDropdownContainer hidden">
+            <p>Guests</p>
+            <div class="addGuestContainer">
+              <button class="decreaseBtn">-</button>
+              <span class="counter">1</span>
+              <button class="increaseBtn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkIn">
+          <p>Check-in</p>
+          <button class="checkinDate">
+            <i class="bx bx-calendar-alt"></i
+            ><span class="displayCheckinDate">Check-in</span>
+          </button>
+          <div id="calendar"></div>
+        </div>
+
+        <div class="checkOut">
+          <p>Check-out</p>
+          <button class="checkoutDate">
+            <i class="bx bx-calendar-alt"></i
+            ><span class="displayCheckoutDate">Check-out</span>
+          </button>
+          <div id="checkoutCalendar"></div>
+        </div>
+      </div>
+
+      <div class="hotelSearch">
+        <p>Find Hotel</p>
+        <div class="search">
           <input
             type="text"
-            name="locationInput"
-            id="locationInput"
-            placeholder="Ex. Bangkok, TH"
+            name="hotelInput"
+            id="hotelInput"
+            placeholder="Ex. IBIS Hotel"
           />
+          <button class="searchBtn"><i class="bx bx-search-big"></i></button>
         </div>
-        <div class="dropdownContainer hidden">
-          <p class="placesHeader">Popular places</p>
-          <div class="item">
-            <i class="bx bx-location"></i>
-            <p class="places">Pattaya, TH</p>
-          </div>
-          <div class="item">
-            <i class="bx bx-location"></i>
-            <p class="places">Bangkok, TH</p>
-          </div>
-          <div class="item">
-            <i class="bx bx-location"></i>
-            <p class="places">Huahin, TH</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="guestFilter">
-        <p>Person</p>
-        <button class="guest">
-          <i class="bx bx-user"></i
-          ><span><span class="numOfGuest">1</span> Person</span>
-        </button>
-        <div class="guestDropdownContainer hidden">
-          <p>Guests</p>
-          <div class="addGuestContainer">
-            <button class="decreaseBtn">-</button>
-            <span class="counter">1</span>
-            <button class="increaseBtn">+</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="checkIn">
-        <p>Check-in</p>
-        <button class="checkinDate">
-          <i class="bx bx-calendar-alt"></i><span>Check-in</span>
-        </button>
-      </div>
-
-      <div class="checkOut">
-        <p>Check-out</p>
-        <button class="checkoutDate">
-          <i class="bx bx-calendar-alt"></i><span>Check-out</span>
-        </button>
       </div>
     </div>
 
-    <div class="hotelSearch">
-      <p>Find Hotel</p>
-      <div class="search">
-        <input
-          type="text"
-          name="hotelInput"
-          id="hotelInput"
-          placeholder="Ex. IBIS Hotel"
-        />
-        <button class="searchBtn"><i class="bx bx-search-big"></i></button>
-      </div>
-    </div>
-  </div>
-
-  <script src="../public/index.js"></script>
-  <body></body>
+    <script src="../public/index.js"></script>
+  </body>
 </html>
