@@ -12,8 +12,62 @@ const checkInDateBtn = document.querySelector(".checkinDate");
 const checkinDate = document.querySelector(".displayCheckinDate");
 const checkoutDateBtn = document.querySelector(".checkoutDate");
 const checkoutDate = document.querySelector(".displayCheckoutDate");
+const placeElements = document.querySelectorAll(".places");
+const foundHotelContainer = document.querySelector(".foundHotelContainer");
+const numOfFoundHotel = document.querySelector(".numOfFoundHotel");
 let calendar;
 let calendar2;
+
+const hotelDescription = [
+  {
+    hotelName: "Sapphire Haven",
+    reviewScore: 4.9,
+    hotelLocation: "Bangkok, Thailand",
+    coords: [13.72105484407954, 100.50707025462003],
+    provinceCoords: [13.736717, 100.523186],
+    price: "$ 100",
+    hotelImage: "../public/assets/HotelImg.jpg",
+  },
+  {
+    hotelName: "Riva Vibe Hotel",
+    reviewScore: 4.8,
+    hotelLocation: "Bangkok, Thailand",
+    coords: [13.721652594564768, 100.50922081974763],
+    provinceCoords: [13.736717, 100.523186],
+    price: "$35.09",
+    hotelImage: "../public/assets/RivaVibeHotel.jpg",
+  },
+  {
+    hotelName: "Royal Cliff Grand Hotel",
+    reviewScore: 4.5,
+    hotelLocation: "Pattaya, Thailand",
+    coords: [12.923669811620817, 100.86066268343282],
+    provinceCoords: [12.927608, 100.877083],
+    price: "$140.77",
+    hotelImage: "../public/assets/RoyalCliffGrand.jpg",
+  },
+];
+
+const InitialhotelDescription = [
+  {
+    hotelName: "Sapphire Haven",
+    reviewScore: 4.9,
+    hotelLocation: "Bangkok, Thailand",
+    coords: [13.72105484407954, 100.50707025462003],
+    provinceCoords: [13.736717, 100.523186],
+    price: "$ 100",
+    hotelImage: "../public/assets/HotelImg.jpg",
+  },
+  {
+    hotelName: "Riva Vibe Hotel",
+    reviewScore: 4.8,
+    hotelLocation: "Bangkok, Thailand",
+    coords: [13.721652594564768, 100.50922081974763],
+    provinceCoords: [13.736717, 100.523186],
+    price: "$35.09",
+    hotelImage: "../public/assets/RivaVibeHotel.jpg",
+  },
+];
 
 function handleLocationClick(element) {
   element.addEventListener("click", () => {
@@ -34,7 +88,19 @@ const hideFilterDropdown = function (e) {
 };
 
 const hideLocationDropdown = function (e) {
-  if (e.target !== locationInput) {
+  let selectedPlace;
+  placeElements.forEach(function (element) {
+    if (element === e.target) {
+      selectedPlace = element;
+    }
+  });
+
+  if (e.target === selectedPlace) {
+    dropdown.classList.add("hidden");
+    showHotel(
+      selectedPlace.innerHTML.slice(0, selectedPlace.innerHTML.indexOf(","))
+    );
+  } else if (e.target !== locationInput) {
     dropdown.classList.add("hidden");
   }
 };
@@ -148,3 +214,216 @@ increaseBtn.addEventListener("click", (e) => {
 decreaseBtn.addEventListener("click", (e) => {
   handleGuestChange(e);
 });
+
+const renderHotelMarker = function (hotel, map) {
+  console.log(hotel);
+  L.marker(hotel.coords)
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        minWidth: 250,
+        autoClose: true,
+        closeOnClick: false,
+        className: "hotelPopup",
+      })
+    )
+    .setPopupContent(
+      `<div class="popupTopSection">
+        <img
+          src=${hotel.hotelImage}
+          alt="hotel image"
+          class="popupImage"
+        />
+        <div class="popupHotelDetail">
+          <div class="popupHotelNameAndReview">
+            <p class="popupHotelName">${hotel.hotelName}</p>
+            <div class="popupReview">
+              <span class="popupReviewScore">${hotel.reviewScore}</span>
+              <i class="bxr bxs-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="popupBottomSection">
+        <p class="popupPrice">${hotel.price} <span>| per night</span></p>
+        <a class="popupBookHotel" href="#">Book now</a>
+      </div>`
+    );
+};
+
+let map;
+// setView( [ Need to be coords of selected location] )
+const loadMap = function (filteredHotel) {
+  let provinceLatLong = filteredHotel[0].provinceCoords;
+  map.flyTo(provinceLatLong, 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+  // filteredHotel.forEach(function (hotel) {
+  //   renderHotelMarker(hotel, map);
+  // });
+};
+
+const loadInitialData = function () {
+  map = L.map("map").setView([13.736717, 100.523186], 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // InitialhotelDescription.forEach(function (hotel) {
+  //   renderHotelMarker(hotel, map);
+  // });
+
+  hotelDescription.forEach(function (hotel) {
+    renderHotelMarker(hotel, map);
+  });
+
+  map.panTo([13.736717, 100.523186]);
+
+  InitialhotelDescription.forEach(function (hotel) {
+    foundHotelContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="foundHotel">
+            <img
+              src="${hotel.hotelImage}"
+              alt="${hotel.hotelName}"
+              class="hotelImage"
+            />
+            <div class="hotelDetailContainer">
+              <div class="hotelDetail">
+                <div class="hotelNameAndReviewContainer">
+                  <p class="hotelName">${hotel.hotelName}</p>
+                  <div class="review">
+                    <span class="reviewScore">${hotel.reviewScore}</span>
+                    <i class="bxr bxs-star"></i>
+                  </div>
+                </div>
+
+                <div class="locationContainer">
+                  <i class="bx bx-location"></i>
+                  <p class="location">${hotel.hotelLocation}</p>
+                </div>
+
+                <div class="facilitiesContainer">
+                  <div class="facility">
+                    <i class="bxr bxs-bed-alt"></i>
+                    <span>2 Beds</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-bath"></i>
+                    <span>1 Bathroom</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-wifi"></i>
+                    <span>Free Wifi</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-expand-right"></i>
+                    <span>400 sq</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-cup-saucer"></i>
+                    <span>Have Breakfast</span>
+                  </div>
+                </div>
+
+                <div class="priceAndMoreDetailContainer">
+                  <p class="price">
+                    ${hotel.price} <span class="discount">20% off</span>
+                  </p>
+                  <div class="bookAndViewDetailContainer">
+                    <a class="viewDetail" href="#">View Details</a>
+                    <a class="bookHotel" href="#">Book now</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`
+    );
+  });
+  numOfFoundHotel.innerHTML = InitialhotelDescription.length;
+};
+
+const showHotel = function (place) {
+  console.log(place);
+  foundHotelContainer.innerHTML = " ";
+  let filteredHotel = hotelDescription.filter(function (hotel) {
+    return (
+      hotel.hotelLocation.slice(0, hotel.hotelLocation.indexOf(",")) === place
+    );
+  });
+  filteredHotel.forEach(function (hotel) {
+    foundHotelContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="foundHotel">
+            <img
+              src="${hotel.hotelImage}"
+              alt="${hotel.hotelName}"
+              class="hotelImage"
+            />
+            <div class="hotelDetailContainer">
+              <div class="hotelDetail">
+                <div class="hotelNameAndReviewContainer">
+                  <p class="hotelName">${hotel.hotelName}</p>
+                  <div class="review">
+                    <span class="reviewScore">${hotel.reviewScore}</span>
+                    <i class="bxr bxs-star"></i>
+                  </div>
+                </div>
+
+                <div class="locationContainer">
+                  <i class="bx bx-location"></i>
+                  <p class="location">${hotel.hotelLocation}</p>
+                </div>
+
+                <div class="facilitiesContainer">
+                  <div class="facility">
+                    <i class="bxr bxs-bed-alt"></i>
+                    <span>2 Beds</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-bath"></i>
+                    <span>1 Bathroom</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-wifi"></i>
+                    <span>Free Wifi</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-expand-right"></i>
+                    <span>400 sq</span>
+                  </div>
+
+                  <div class="facility">
+                    <i class="bxr bxs-cup-saucer"></i>
+                    <span>Have Breakfast</span>
+                  </div>
+                </div>
+
+                <div class="priceAndMoreDetailContainer">
+                  <p class="price">
+                    ${hotel.price} <span class="discount">20% off</span>
+                  </p>
+                  <div class="bookAndViewDetailContainer">
+                    <a class="viewDetail" href="#">View Details</a>
+                    <a class="bookHotel" href="#">Book now</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`
+    );
+  });
+  loadMap(filteredHotel);
+};
+
+loadInitialData();

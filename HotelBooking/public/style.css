@@ -312,6 +312,8 @@ li .line {
 }
 
 .mainContent {
+  min-height: 500px;
+  height: max-content;
   padding: 30px;
   gap: 20px;
   display: flex;
@@ -321,7 +323,7 @@ li .line {
   flex: 1;
 }
 
-.map {
+#map {
   flex: 1;
 }
 
@@ -367,6 +369,7 @@ li .line {
 
 .hotelImage {
   width: 20%;
+  border-radius: 8px 0 0 8px;
 }
 
 .hotelDetail {
@@ -481,4 +484,79 @@ li .line {
   color: #0078f9;
   text-transform: uppercase;
   font-weight: 600;
+}
+
+.popupTopSection {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.popupImage {
+  width: 60px;
+  height: 50px;
+  border-radius: 8px;
+}
+
+.popupHotelDetail {
+  width: 100%;
+}
+
+.popupHotelNameAndReview {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.popupHotelName {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.popupReview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 4px 4px;
+  border-radius: 8px;
+  background-color: var(--Accent-hue);
+}
+
+.popupReview i {
+  color: #ffffff;
+  font-size: 0.7rem;
+}
+
+.popupReviewScore {
+  color: #ffffff;
+  font-size: 0.7rem;
+}
+
+.popupBottomSection {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+}
+
+.popupPrice {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.popupPrice span {
+  color: var(--Secondary-hue);
+  font-weight: normal;
+}
+
+.popupBookHotel {
+  font-size: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: #0078f9;
+  text-transform: uppercase;
 }
