@@ -137,13 +137,10 @@ li .line {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-#calendar {
-  position: absolute;
-  top: 7rem;
-}
-
+#calendar,
 #checkoutCalendar {
   position: absolute;
+  z-index: 999999;
   top: 7rem;
 }
 
@@ -351,6 +348,7 @@ li .line {
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  height: auto;
 }
 
 .foundHotel {
@@ -559,4 +557,31 @@ li .line {
   font-weight: 500;
   color: #0078f9;
   text-transform: uppercase;
+}
+
+.notFoundHotelMessage {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 320px;
+}
+
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.notFoundMessage {
+  font-size: 1.5rem;
+}
+
+.notFoundContainer i {
+  font-size: 3rem;
+}
+
+.hide {
+  display: none;
 }

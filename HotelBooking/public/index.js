@@ -15,8 +15,11 @@ const checkoutDate = document.querySelector(".displayCheckoutDate");
 const placeElements = document.querySelectorAll(".places");
 const foundHotelContainer = document.querySelector(".foundHotelContainer");
 const numOfFoundHotel = document.querySelector(".numOfFoundHotel");
+const selectLocation = document.querySelector(".selectLocation");
+const hotelInput = document.querySelector("#hotelInput");
 let calendar;
 let calendar2;
+let map;
 
 const hotelDescription = [
   {
@@ -97,9 +100,7 @@ const hideLocationDropdown = function (e) {
 
   if (e.target === selectedPlace) {
     dropdown.classList.add("hidden");
-    showHotel(
-      selectedPlace.innerHTML.slice(0, selectedPlace.innerHTML.indexOf(","))
-    );
+    showHotel(selectedPlace.innerHTML);
   } else if (e.target !== locationInput) {
     dropdown.classList.add("hidden");
   }
@@ -215,6 +216,22 @@ decreaseBtn.addEventListener("click", (e) => {
   handleGuestChange(e);
 });
 
+const searchingHotel = function (hotelElements) {
+  hotelInput.addEventListener("input", (e) => {
+    const inputValue = e.target.value.toLowerCase();
+    console.log(hotelElements);
+
+    Array.from(hotelElements, (element) => {
+      const isVisible = element
+        .querySelector(".hotelName")
+        .innerHTML.toLowerCase()
+        .includes(inputValue);
+
+      element.classList.toggle("hide", !isVisible);
+    });
+  });
+};
+
 const renderHotelMarker = function (hotel, map) {
   console.log(hotel);
   L.marker(hotel.coords)
@@ -251,8 +268,6 @@ const renderHotelMarker = function (hotel, map) {
     );
 };
 
-let map;
-// setView( [ Need to be coords of selected location] )
 const loadMap = function (filteredHotel) {
   let provinceLatLong = filteredHotel[0].provinceCoords;
   map.flyTo(provinceLatLong, 13);
@@ -260,9 +275,6 @@ const loadMap = function (filteredHotel) {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
-  // filteredHotel.forEach(function (hotel) {
-  //   renderHotelMarker(hotel, map);
-  // });
 };
 
 const loadInitialData = function () {
@@ -271,10 +283,6 @@ const loadInitialData = function () {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
-
-  // InitialhotelDescription.forEach(function (hotel) {
-  //   renderHotelMarker(hotel, map);
-  // });
 
   hotelDescription.forEach(function (hotel) {
     renderHotelMarker(hotel, map);
@@ -348,6 +356,7 @@ const loadInitialData = function () {
     );
   });
   numOfFoundHotel.innerHTML = InitialhotelDescription.length;
+  searchingHotel(foundHotelContainer.children);
 };
 
 const showHotel = function (place) {
@@ -355,7 +364,8 @@ const showHotel = function (place) {
   foundHotelContainer.innerHTML = " ";
   let filteredHotel = hotelDescription.filter(function (hotel) {
     return (
-      hotel.hotelLocation.slice(0, hotel.hotelLocation.indexOf(",")) === place
+      hotel.hotelLocation.slice(0, hotel.hotelLocation.indexOf(",")) ===
+      place.slice(0, hotel.hotelLocation.indexOf(","))
     );
   });
   filteredHotel.forEach(function (hotel) {
@@ -423,7 +433,22 @@ const showHotel = function (place) {
           </div>`
     );
   });
-  loadMap(filteredHotel);
+  selectLocation.innerHTML = place;
+  numOfFoundHotel.innerHTML = filteredHotel.length;
+  if (filteredHotel.length === 0) {
+    foundHotelContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="notFoundHotelMessage">
+            <div class="notFoundContainer">
+              <i class="bxr bx-alert-circle"></i>
+              <p class="notFoundMessage">No Hotels found.</p>
+            </div>
+          </div>`
+    );
+  } else {
+    loadMap(filteredHotel);
+    searchingHotel(foundHotelContainer.children);
+  }
 };
 
 loadInitialData();
